@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Tiếng Trung Cơ Bản - Pinyin & Bộ Thủ</title>
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --primary-light: #ff6659;
+            --primary-dark: #9a0007;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #212529;
+            --text-muted: #6c757d;
+            --border: #dee2e6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background-color: var(--card-bg);
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background-color: #ffeaea;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(211, 47, 47, 0.15);
+            border-color: var(--primary);
+        }
+
+        .card:active {
+            transform: scale(0.96);
+        }
+
+        .pinyin-text {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .hanzi-sample {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .speak-icon {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .tones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .tone-card {
+            background: var(--card-bg);
+            border-left: 5px solid var(--primary);
+            border-radius: 8px;
+            padding: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tone-card:hover {
+            background-color: #fff5f5;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .radical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .radical-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .radical-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .radical-char {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        .radical-pinyin {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .radical-meaning {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .radical-strokes {
+            font-size: 0.8rem;
+            background: #eee;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-top: 0.5rem;
+        }
+
+        .quiz-box {
+            background: var(--card-bg);
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .audio-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            margin: 1rem 0;
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .option-btn {
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #fff5f5;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            min-height: 24px;
+        }
+
+        .voice-notice {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🇨🇳 Học Tiếng Trung Cơ Bản</h1>
+    <p>Bấm vào từng thẻ để nghe phát âm chuẩn bản xứ (Pinyin & Bộ thủ)</p>
+</header>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('pinyin', this)">1. Bảng Pinyin & Thanh Điệu</button>
+        <button class="tab-btn" onclick="switchTab('radicals', this)">2. Bộ Thủ Cơ Bản</button>
+        <button class="tab-btn" onclick="switchTab('quiz', this)">3. Luyện Nghe & Nhận Diện</button>
+    </div>
+
+    <div id="pinyin" class="tab-content active">
+        <h2 class="section-title">Thanh Điệu (4 Thanh cơ bản + Thanh nhẹ)</h2>
+        <div class="tones-grid" id="tones-container"></div>
+
+        <h2 class="section-title">Thanh Mẫu (Phụ âm đầu - 21 âm)</h2>
+        <div class="grid" id="initials-container"></div>
+
+        <h2 class="section-title">Vận Mẫu (Nguyên âm - 36 âm)</h2>
+        <div class="grid" id="finals-container"></div>
+    </div>
+
+    <div id="radicals" class="tab-content">
+        <h2 class="section-title">Các Bộ Thủ Tiếng Trung Thông Dụng Nhất</h2>
+        <input type="text" id="radical-search" class="search-box" placeholder="Tìm theo tên tiếng Việt, Pinyin hoặc số nét..." onkeyup="filterRadicals()">
+        <div class="radical-grid" id="radicals-container"></div>
+    </div>
+
+    <div id="quiz" class="tab-content">
+        <div class="quiz-box">
+            <h2>Nghe và chọn đáp án đúng</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Bấm vào biểu tượng loa để nghe lại</p>
+            <button class="audio-btn" onclick="playQuizAudio()">🔊</button>
+            <div id="quiz-question-hint" style="font-size: 1.1rem; color: var(--primary-dark); font-weight: 600;"></div>
+            <div class="quiz-options" id="quiz-options"></div>
+            <div class="quiz-feedback" id="quiz-feedback"></div>
+            <button class="tab-btn" style="margin-top: 1.5rem; background: #eee;" onclick="generateQuiz()">Câu tiếp theo ➔</button>
+        </div>
+    </div>
+
+    <p class="voice-notice">💡 Mẹo: Sử dụng trình duyệt Chrome, Edge hoặc Safari để có chất lượng giọng đọc tiếng Trung (zh-CN) tốt nhất.</p>
+</div>
+
+<script>
+    const tonesData = [
+        { mark: "ā (Thanh 1)", desc: "Đọc cao và ngang (như không dấu kéo dài)", sample: "妈", pinyin: "mā (Mẹ)" },
+        { mark: "á (Thanh 2)", desc: "Đọc từ thấp lên cao (gần giống dấu sắc)", sample: "麻", pinyin: "má (Cây gai)" },
+        { mark: "ǎ (Thanh 3)", desc: "Đọc xuống thấp rồi lên cao (gần giống dấu hỏi)", sample: "马", pinyin: "mǎ (Con ngựa)" },
+        { mark: "à (Thanh 4)", desc: "Đọc từ cao xuống thấp dứt khoát (gần giống dấu nặng)", sample: "骂", pinyin: "mà (Mắng)" },
+        { mark: "a (Thanh nhẹ)", desc: "Đọc ngắn, nhẹ và lướt qua", sample: "吗", pinyin: "ma (Trợ từ nghi vấn)" }
+    ];
+
+    const initialsData = [
+        { p: "b", h: "玻", tip: "Đọc như 'p' không bật hơi" },
+        { p: "p", h: "坡", tip: "Đọc như 'ph' bật hơi mạnh" },
+        { p: "m", h: "摸", tip: "Đọc như 'm' tiếng Việt" },
+        { p: "f", h: "佛", tip: "Đọc như 'ph' tiếng Việt" },
+        { p: "d", h: "得", tip: "Đọc như 't' không bật hơi" },
+        { p: "t", h: "特", tip: "Đọc như 'th' bật hơi" },
+        { p: "n", h: "讷", tip: "Đọc như 'n' tiếng Việt" },
+        { p: "l", h: "勒", tip: "Đọc như 'l' tiếng Việt" },
+        { p: "g", h: "哥", tip: "Đọc như 'c/k' không bật hơi" },
+        { p: "k", h: "科", tip: "Đọc như 'kh' bật hơi mạnh" },
+        { p: "h", h: "喝", tip: "Đọc giữa 'h' và 'kh'" },
+        { p: "j", h: "基", tip: "Đọc như 'ch' đầu lưỡi hạ thấp" },
+        { p: "q", h: "欺", tip: "Đọc như 'ch' bật hơi mạnh" },
+        { p: "x", h: "希", tip: "Đọc như 'x' đầu lưỡi hạ thấp" },
+        { p: "zh", h: "知", tip: "Đọc như 'tr' uốn lưỡi" },
+        { p: "ch", h: "吃", tip: "Đọc như 'tr' uốn lưỡi + bật hơi" },
+        { p: "sh", h: "诗", tip: "Đọc như 's' uốn lưỡi" },
+        { p: "r", h: "日", tip: "Đọc như 'r' uốn lưỡi, không rung" },
+        { p: "z", h: "资", tip: "Đọc như 'ch' đầu lưỡi thẳng" },
+        { p: "c", h: "雌", tip: "Đọc như 'ch' thẳng lưỡi + bật hơi" },
+        { p: "s", h: "思", tip: "Đọc như 'x' đầu lưỡi thẳng" }
+    ];
+
+    const finalsData = [
+        { p: "a", h: "啊" }, { p: "o", h: "喔" }, { p: "e", h: "鹅" },
+        { p: "i", h: "衣" }, { p: "u", h: "乌" }, { p: "ü", h: "迂" },
+        { p: "ai", h: "哀" }, { p: "ei", h: "诶" }, { p: "ao", h: "熬" }, { p: "ou", h: "欧" },
+        { p: "an", h: "安" }, { p: "en", h: "恩" }, { p: "ang", h: "昂" }, { p: "eng", h: "亨" }, { p: "ong", h: "轰" },
+        { p: "ia", h: "呀" }, { p: "ie", h: "耶" }, { p: "iao", h: "腰" }, { p: "iu", h: "忧" },
+        { p: "ian", h: "烟" }, { p: "in", h: "因" }, { p: "iang", h: "央" }, { p: "ing", h: "英" }, { p: "iong", h: "雍" },
+        { p: "ua", h: "蛙" }, { p: "uo", h: "窝" }, { p: "uai", h: "歪" }, { p: "ui", h: "威" },
+        { p: "uan", h: "弯" }, { p: "un", h: "温" }, { p: "uang", h: "汪" }, { p: "ueng", h: "翁" },
+        { p: "üe", h: "约" }, { p: "üan", h: "冤" }, { p: "ün", h: "晕" }, { p: "er", h: "儿" }
+    ];
+
+    const radicalsData = [
+        { char: "一", pinyin: "yī", meaning: "Bộ Nhất (Số một)", strokes: 1 },
+        { char: "丨", pinyin: "gǔn", meaning: "Bộ Cổn (Nét sổ)", strokes: 1 },
+        { char: "丶", pinyin: "zhǔ", meaning: "Bộ Chủ (Nét chấm)", strokes: 1 },
+        { char: "丿", pinyin: "piě", meaning: "Bộ Phiệt (Nét phẩy)", strokes: 1 },
+        { char: "乙", pinyin: "yǐ", meaning: "Bộ Ất (Vị trí thứ 2)", strokes: 1 },
+        { char: "二", pinyin: "èr", meaning: "Bộ Nhị (Số hai)", strokes: 2 },
+        { char: "人", pinyin: "rén", meaning: "Bộ Nhân (Người)", strokes: 2 },
+        { char: "亻", pinyin: "rén", meaning: "Bộ Nhân đứng (Người)", strokes: 2 },
+        { char: "儿", pinyin: "ér", meaning: "Bộ Nhi (Trẻ con)", strokes: 2 },
+        { char: "入", pinyin: "rù", meaning: "Bộ Nhập (Vào)", strokes: 2 },
+        { char: "八", pinyin: "bā", meaning: "Bộ Bát (Số tám)", strokes: 2 },
+        { char: "冂", pinyin: "jiōng", meaning: "Bộ Quynh (Vùng biên)", strokes: 2 },
+        { char: "冖", pinyin: "mì", meaning: "Bộ Mịch (Trùm khăn)", strokes: 2 },
+        { char: "冫", pinyin: "bīng", meaning: "Bộ Băng (Nước đá)", strokes: 2 },
+        { char: "几", pinyin: "jī", meaning: "Bộ Kỷ (Ghế dựa)", strokes: 2 },
+        { char: "刀", pinyin: "dāo", meaning: "Bộ Đao (Con dao)", strokes: 2 },
+        { char: "刂", pinyin: "dāo", meaning: "Bộ Đao đứng (Con dao)", strokes: 2 },
+        { char: "力", pinyin: "lì", meaning: "Bộ Lực (Sức mạnh)", strokes: 2 },
+        { char: "十", pinyin: "shí", meaning: "Bộ Thập (Số mười)", strokes: 2 },
+        { char: "又", pinyin: "yòu", meaning: "Bộ Hựu (Lại nữa, tay phải)", strokes: 2 },
+        { char: "口", pinyin: "kǒu", meaning: "Bộ Khẩu (Cái miệng)", strokes: 3 },
+        { char: "囗", pinyin: "wéi", meaning: "Bộ Vi (Vây quanh)", strokes: 3 },
+        { char: "土", pinyin: "tǔ", meaning: "Bộ Thổ (Đất)", strokes: 3 },
+        { char: "大", pinyin: "dà", meaning: "Bộ Đại (To lớn)", strokes: 3 },
+        { char: "女", pinyin: "nǚ", meaning: "Bộ Nữ (Phụ nữ)", strokes: 3 },
+        { char: "子", pinyin: "zǐ", meaning: "Bộ Tử (Con cái)", strokes: 3 },
+        { char: "宀", pinyin: "mián", meaning: "Bộ Miên (Mái nhà)", strokes: 3 },
+        { char: "寸", pinyin: "cùn", meaning: "Bộ Thốn (Đơn vị tấc)", strokes: 3 },
+        { char: "小", pinyin: "xiǎo", meaning: "Bộ Tiểu (Nhỏ bé)", strokes: 3 },
+        { char: "山", pinyin: "shān", meaning: "Bộ Sơn (Núi)", strokes: 3 },
+        { char: "工", pinyin: "gōng", meaning: "Bộ Công (Công việc)", strokes: 3 },
+        { char: "巾", pinyin: "jīn", meaning: "Bộ Cân (Cái khăn)", strokes: 3 },
+        { char: "广", pinyin: "guǎng", meaning: "Bộ Nghiễm (Mái nhà)", strokes: 3 },
+        { char: "弓", pinyin: "gōng", meaning: "Bộ Cung (Cái cung)", strokes: 3 },
+        { char: "彳", pinyin: "chì", meaning: "Bộ Xích (Bước chân trái)", strokes: 3 },
+        { char: "心", pinyin: "xīn", meaning: "Bộ Tâm (Trái tim)", strokes: 4 },
+        { char: "忄", pinyin: "xīn", meaning: "Bộ Tâm đứng (Tình cảm)", strokes: 3 },
+        { char: "手", pinyin: "shǒu", meaning: "Bộ Thủ (Bàn tay)", strokes: 4 },
+        { char: "扌", pinyin: "shǒu", meaning: "Bộ Tài gảy (Bàn tay)", strokes: 3 },
+        { char: "日", pinyin: "rì", meaning: "Bộ Nhật (Mặt trời, ngày)", strokes: 4 },
+        { char: "月", pinyin: "yuè", meaning: "Bộ Nguyệt (Mặt trăng, tháng)", strokes: 4 },
+        { char: "木", pinyin: "mù", meaning: "Bộ Mộc (Cây cối)", strokes: 4 },
+        { char: "水", pinyin: "shuǐ", meaning: "Bộ Thủy (Nước)", strokes: 4 },
+        { char: "氵", pinyin: "shuǐ", meaning: "Bộ Ba chấm thủy (Nước)", strokes: 3 },
+        { char: "火", pinyin: "huǒ", meaning: "Bộ Hỏa (Lửa)", strokes: 4 },
+        { char: "灬", pinyin: "huǒ", meaning: "Bộ Bốn chấm hỏa (Lửa)", strokes: 4 },
+        { char: "田", pinyin: "tián", meaning: "Bộ Điền (Ruộng)", strokes: 5 },
+        { char: "目", pinyin: "mù", meaning: "Bộ Mục (Con mắt)", strokes: 5 },
+        { char: "言", pinyin: "yán", meaning: "Bộ Ngôn (Lời nói)", strokes: 7 },
+        { char: "讠", pinyin: "yán", meaning: "Bộ Ngôn giản thể (Lời nói)", strokes: 2 },
+        { char: "金", pinyin: "jīn", meaning: "Bộ Kim (Kim loại, vàng)", strokes: 8 },
+        { char: "钅", pinyin: "jīn", meaning: "Bộ Kim giản thể (Kim loại)", strokes: 5 }
+    ];
+
+    function speakChinese(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Trình duyệt của bạn không hỗ trợ tính năng đọc văn bản.");
+        }
+    }
+
+    function switchTab(tabId, btnEl) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btnEl.classList.add('active');
+        if (tabId === 'quiz' && !currentQuizAnswer) {
+            generateQuiz();
+        }
+    }
+
+    function initPinyin() {
+        const tonesContainer = document.getElementById('tones-container');
+        tonesData.forEach(item => {
+            tonesContainer.innerHTML += `
+                <div class="tone-card" onclick="speakChinese('${item.sample}')">
+                    <div style="font-size: 1.3rem; font-weight: bold; color: var(--primary);">${item.mark}</div>
+                    <div style="font-size: 0.9rem; margin: 0.3rem 0;">${item.desc}</div>
+                    <div style="font-weight: 600;">Ví dụ: ${item.sample} - ${item.pinyin} 🔊</div>
+                </div>
+            `;
+        });
+
+        const initialsContainer = document.getElementById('initials-container');
+        initialsData.forEach(item => {
+            initialsContainer.innerHTML += `
+                <div class="card" title="${item.tip}" onclick="speakChinese('${item.h}')">
+                    <span class="speak-icon">🔊</span>
+                    <div class="pinyin-text">${item.p}</div>
+                    <div class="hanzi-sample">${item.h}</div>
+                </div>
+            `;
+        });
+
+        const finalsContainer = document.getElementById('finals-container');
+        finalsData.forEach(item => {
+            finalsContainer.innerHTML += `
+                <div class="card" onclick="speakChinese('${item.h}')">
+                    <span class="speak-icon">🔊</span>
+                    <div class="pinyin-text">${item.p}</div>
+                    <div class="hanzi-sample">${item.h}</div>
+                </div>
+            `;
+        });
+    }
+
+    function renderRadicals(list) {
+        const container = document.getElementById('radicals-container');
+        container.innerHTML = '';
+        list.forEach(item => {
+            container.innerHTML += `
+                <div class="radical-card" onclick="speakChinese('${item.char}')">
+                    <div class="radical-char">${item.char}</div>
+                    <div class="radical-pinyin">${item.pinyin} 🔊</div>
+                    <div class="radical-meaning">${item.meaning}</div>
+                    <div class="radical-strokes">${item.strokes} nét</div>
+                </div>
+            `;
+        });
+    }
+
+    function filterRadicals() {
+        const query = document.getElementById('radical-search').value.toLowerCase();
+        const filtered = radicalsData.filter(r => 
+            r.meaning.toLowerCase().includes(query) || 
+            r.pinyin.toLowerCase().includes(query) || 
+            r.char.includes(query) ||
+            (r.strokes + " nét").includes(query)
+        );
+        renderRadicals(filtered);
+    }
+
+    let currentQuizAnswer = null;
+
+    function generateQuiz() {
+        document.getElementById('quiz-feedback').innerText = '';
+        const shuffled = [...radicalsData].sort(() => 0.5 - Math.random());
+        const options = shuffled.slice(0, 4);
+        currentQuizAnswer = options[Math.floor(Math.random() * options.length)];
+
+        document.getElementById('quiz-question-hint').innerText = `Nghĩa: ${currentQuizAnswer.meaning}`;
+        
+        const optionsContainer = document.getElementById('quiz-options');
+        optionsContainer.innerHTML = '';
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = `${opt.char} (${opt.pinyin})`;
+            btn.onclick = () => checkQuizAnswer(opt, btn);
+            optionsContainer.appendChild(btn);
+        });
+
+        playQuizAudio();
+    }
+
+    function playQuizAudio() {
+        if (currentQuizAnswer) {
+            speakChinese(currentQuizAnswer.char);
+        }
+    }
+
+    function checkQuizAnswer(selected, btnElement) {
+        const feedback = document.getElementById('quiz-feedback');
+        if (selected.char === currentQuizAnswer.char) {
+            feedback.style.color = 'green';
+            feedback.innerText = '🎉 Chính xác! Tuyệt vời!';
+            btnElement.style.backgroundColor = '#d4edda';
+            btnElement.style.borderColor = '#28a745';
+        } else {
+            feedback.style.color = 'red';
+            feedback.innerText = `❌ Chưa đúng. Đáp án là: ${currentQuizAnswer.char} (${currentQuizAnswer.pinyin})`;
+            btnElement.style.backgroundColor = '#f8d7da';
+            btnElement.style.borderColor = '#dc3545';
+        }
+    }
+
+    initPinyin();
+    renderRadicals(radicalsData);
+</script>
+
+</body>
+</html>
